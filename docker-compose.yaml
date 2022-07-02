@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db_blog:
+    image: mysql:latest
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: blog
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 12345678
+    networks:
+      - wpsite
+  wordpress:
+    depends_on:
+      - db_blog
+    image: wordpress:latest
+    ports:
+      - '9000:80'
+    restart: always
+    volumes: ['./:/var/www/html']
+    environment:
+      WORDPRESS_DB_HOST: db_blog:3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: 12345678
+      WORDPRESS_DB_NAME: blog
+    networks:
+      - wpsite
+networks:
+  wpsite:
+volumes:
+  db_data:
+

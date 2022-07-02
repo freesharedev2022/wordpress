@@ -1,0 +1,1 @@
+<!--dùng sidebar bằng cách gọi hàm --><?php //get_sidebar(); ?>
